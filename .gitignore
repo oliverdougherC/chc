@@ -1,6 +1,9 @@
 /tmp
 /out-tsc
 /dist
+.DS_Store
+.idea/
+.omx/
 
 /node_modules
 npm-debug.log*
