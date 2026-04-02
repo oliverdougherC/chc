@@ -1,5 +1,5 @@
 {
-  "last_turn_at": "2026-04-02T01:43:30.140Z",
-  "turn_count": 10,
-  "last_agent_output": "Replaced the `Technical Workshops` image on the home page with the workshop placeholder in [src/inde"
+  "last_turn_at": "2026-04-02T01:56:50.121Z",
+  "turn_count": 12,
+  "last_agent_output": "Moved the real homepage into the repo root and repaired the project so the site root is consistent a"
 }

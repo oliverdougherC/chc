@@ -3,11 +3,11 @@
     "target": "es2020",
     "module": "es2020",
     "lib": ["dom", "es2020"],
-    "rootDir": "src",
+    "rootDir": ".",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["scripts/**/*.ts"]
 }

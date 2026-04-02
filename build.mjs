@@ -1,28 +1,26 @@
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-const sourceDir = 'src';
 const distDir = 'dist';
+const siteEntries = ['500.html', 'about', 'images', 'index.html', 'scripts', 'styles'];
 
 const shouldCopyFile = (filePath) => !filePath.endsWith('.ts') && !filePath.endsWith('.tsx');
 
-const copyStatic = (fromDir, toDir) => {
-    for (const entry of readdirSync(fromDir, { withFileTypes: true })) {
-        const fromPath = join(fromDir, entry.name);
-        const toPath = join(toDir, entry.name);
-
-        if (entry.isDirectory()) {
-            copyStatic(fromPath, toPath);
-            continue;
+const copyStatic = (fromPath, toPath) => {
+    if (statSync(fromPath).isDirectory()) {
+        for (const entry of readdirSync(fromPath, { withFileTypes: true })) {
+            copyStatic(join(fromPath, entry.name), join(toPath, entry.name));
         }
 
-        if (!shouldCopyFile(fromPath)) {
-            continue;
-        }
-
-        mkdirSync(dirname(toPath), { recursive: true });
-        cpSync(fromPath, toPath);
+        return;
     }
+
+    if (!shouldCopyFile(fromPath)) {
+        return;
+    }
+
+    mkdirSync(dirname(toPath), { recursive: true });
+    cpSync(fromPath, toPath);
 };
 
 if (existsSync(distDir)) {
@@ -30,4 +28,6 @@ if (existsSync(distDir)) {
 }
 
 mkdirSync(distDir, { recursive: true });
-copyStatic(sourceDir, distDir);
+siteEntries.forEach((entry) => {
+    copyStatic(entry, join(distDir, entry));
+});
